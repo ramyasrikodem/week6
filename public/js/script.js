@@ -16,12 +16,20 @@ const cardList = [
         alert("Thanks for clicking me. Hope you have a nice day!")
     }
     const submitForm = () => {
+        console.log('entered form')
         let formData = {};
         formData.first_name = $('#first_name').val();
         formData.last_name = $('#last_name').val();
         formData.password = $('#password').val();
         formData.email = $('#email').val();
         console.log("Form Data Submitted: ", formData);
+        fetch('/home')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data from backend:', data);
+                // You can use this data to update DOM, etc.
+            })
+            .catch(err => console.error('Error:', err));
     }
     const addCards = (items) => {
         items.forEach(item => {
@@ -33,14 +41,14 @@ const cardList = [
         '<span class="card-title grey-text text-darken-4">'+item.title+'<i class="material-icons right">close</i></span>'+
         '<p class="card-text grey-text text-darken-4">'+item.desciption+'</p>'+
         '</div></div></div>';
-        $("#card-section").append(itemToAppend)
-        });
+       $("#card-section").append(itemToAppend)
+});
     }
     $(document).ready(function(){
         $('.materialboxed').materialbox();
         $('#formSubmit').click(()=>{
             submitForm();
         })
-        addCards(cardList);
+       // addCards(cardList);
         $('.modal').modal();
     });
